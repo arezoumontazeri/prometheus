@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  prometheus:
+    image: prom/prometheus:main
+    container_name: prometheus
+    restart: unless-stopped
+    #network_mode: host
+    networks:
+      - prometheus-net
+    ports:
+      - "9090:9090"
+    volumes:
+      - prometheus-data:/prometheus
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+volumes:
+  prometheus-data:
+  # config is mounted from ./config folder; no named volume needed
+
+networks:
+  prometheus-net:
+    driver: bridge
+
