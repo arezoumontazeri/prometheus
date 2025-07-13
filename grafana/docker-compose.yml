@@ -1,0 +1,21 @@
+version: '3'  # Compose file format version
+
+services:
+  grafana:  # Service name
+    image: grafana/grafana:latest  # Docker image
+    container_name: grafana
+    environment:  # Set environment variables
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    restart: unless-stopped  # Restart policy
+    networks:
+     - prometheus-net
+    ports:
+      - "3000:3000"
+volumes:
+  grafana-storage:  # Named volume for persistent data
+networks:
+  prometheus-net:
+     driver: bridge
