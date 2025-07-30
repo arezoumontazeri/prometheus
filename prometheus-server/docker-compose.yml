@@ -13,6 +13,7 @@ services:
     volumes:
       - prometheus-data:/prometheus
       - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./config/targets.json:/etc/prometheus/targets.json
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--storage.tsdb.path=/prometheus"
@@ -22,5 +23,5 @@ volumes:
 
 networks:
   prometheus-net:
-    driver: bridge
+    external: true
 
